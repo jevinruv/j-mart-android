@@ -82,7 +82,6 @@ public class HomeFragment extends Fragment {
                 productList.clear();
                 productList.addAll(products);
                 productsListAdapter.notifyDataSetChanged();
-//                recyclerView.setAdapter(productsListAdapter);
                 Log.d(TAG, "Number of products received: " + products.size());
             }
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="#ffffff"
+    android:orientation="horizontal">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="false"
+            android:alpha="0.2"
+            android:fadingEdge="horizontal|vertical"
+            android:requiresFadingEdge="horizontal|vertical"
+            android:scaleType="centerCrop"
+            android:src="@drawable/abc" />
+
+        <TextView
+            android:id="@+id/lbl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="false"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="Categories"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/card"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="2dp">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/lbl_name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginStart="50dp"-->
+    <!--android:layout_marginLeft="50dp"-->
+    <!--android:layout_marginTop="50dp"-->
+    <!--android:layout_marginEnd="50dp"-->
+    <!--android:layout_marginRight="50dp"-->
+    <!--android:layout_marginBottom="50dp"-->
+    <!--android:text="Category"-->
+    <!--android:textColor="#212224"-->
+    <!--android:textSize="19sp"-->
+    <!--android:textStyle="bold|italic" />-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/image"-->
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="120dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:fadingEdge="horizontal|vertical"-->
+    <!--android:fadingEdgeLength="100dp"-->
+    <!--android:requiresFadingEdge="horizontal|vertical"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--android:ellipsize="none"-->
+    <!--app:srcCompat="@drawable/abc" />-->
+    <!--&lt;!&ndash;tools:srcCompat="@tools:sample/avatars"&ndash;&gt;-->
+    <!--/>-->
+    <!--</RelativeLayout>-->
+
+
+</LinearLayout>

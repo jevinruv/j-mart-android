@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.ProductsListAdapter;
+import com.jevin.jmart.fragments.CategoryFragment;
 import com.jevin.jmart.fragments.HomeFragment;
 import com.jevin.jmart.models.Product;
 import com.jevin.jmart.services.APIClient;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_categories:
                     toolbar.setTitle("Categories");
+                    fragment = new CategoryFragment();
+                    loadFragment(fragment);
                     return true;
                 case R.id.navigation_cart:
                     toolbar.setTitle("Cart");
