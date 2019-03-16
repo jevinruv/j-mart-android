@@ -21,7 +21,10 @@
                 android:id="@+id/image"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:scaleType="centerInside"
+                android:fadingEdge="horizontal|vertical"
+                android:fadingEdgeLength="20dp"
+                android:requiresFadingEdge="horizontal|vertical"
+                android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
@@ -33,7 +36,10 @@
                     android:id="@+id/lbl_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
                     android:padding="2dp"
                     android:text="Name"
                     android:textSize="18sp"
@@ -41,11 +47,12 @@
 
                 <TextView
                     android:id="@+id/lbl_category"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
                     android:padding="2dp"
                     android:text="Category" />
 
@@ -53,7 +60,10 @@
                     android:id="@+id/lbl_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"
                     android:padding="2dp"
                     android:text="Price"
                     android:textColor="@color/red" />

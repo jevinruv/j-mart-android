@@ -24,7 +24,7 @@
             android:fadingEdge="horizontal|vertical"
             android:requiresFadingEdge="horizontal|vertical"
             android:scaleType="centerCrop"
-            android:src="@drawable/abc" />
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/lbl_name"

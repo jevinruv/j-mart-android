@@ -1,13 +1,18 @@
 package com.jevin.jmart.fragments;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -30,9 +35,12 @@ public class HomeFragment extends Fragment {
 //    private OnFragmentInteractionListener mListener;
 
     private RecyclerView recyclerView;
+    private SearchView searchView;
+    private SearchView.OnQueryTextListener queryTextListener;
     private List<Product> productList;
     private ProductsListAdapter productsListAdapter;
     private static final String TAG = HomeFragment.class.getSimpleName();
+
 
     public HomeFragment() {
     }
@@ -49,6 +57,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
 //        if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
@@ -60,6 +69,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         productList = new ArrayList<>();
@@ -91,6 +101,50 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+            searchView.setMaxWidth(Integer.MAX_VALUE);
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String query) {
+                    productsListAdapter.getFilter().filter(query);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    productsListAdapter.getFilter().filter(query);
+                    return false;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            default:
+                break;
+        }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
+    }
+
 
 //    public void onButtonPressed(Uri uri) {
 //        if (mListener != null) {
@@ -128,4 +182,5 @@ public class HomeFragment extends Fragment {
 //    public interface OnFragmentInteractionListener {
 //        void onFragmentInteraction(Uri uri);
 //    }
+
 }

@@ -1,5 +1,7 @@
 package com.jevin.jmart.views;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -10,7 +12,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jevin.jmart.R;
@@ -79,5 +83,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
 
 }
