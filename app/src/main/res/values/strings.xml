@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">JMart</string>
+
+    <string name="price_with_currency">Rs. %.2f</string>
+    <string name="price_with_currency_string">Rs. %s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

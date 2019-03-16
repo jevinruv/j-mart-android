@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="purple">#8e5cdd</color>
+    <color name="orange">#fe7d1f</color>
+
+    <color name="bluecolor">#1377ec</color>
+    <color name="white">#ffffff</color>
+    <color name="colororange">#b2fc8325</color>
+    <color name="progressBarColor">#ffffff</color>
+    <color name="progresscolor">#ff9b4c</color>
+
+    <color name="black">#000000</color>
+    <color name="transperent">#00000000</color>
+    <color name="sub_txt">#8e8e93</color>
+    <color name="blue">#405499</color>
+    <color name="view_line">#8e8e93</color>
+    <color name="red">#ff3b30</color>
+    <color name="keyboard">#fafafa</color>
+    <color name="bg_clolor">#fafafa</color>
+    <color name="grey">#E6E6E6</color>
+
+    <!--<color name="colorPrimary">#008577</color>-->
+    <!--<color name="colorPrimaryDark">#00574B</color>-->
+    <!--<color name="colorAccent">#D81B60</color>-->
+</resources>
