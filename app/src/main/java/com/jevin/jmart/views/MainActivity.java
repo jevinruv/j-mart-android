@@ -37,10 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = getSupportActionBar();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        toolbar.setTitle("Shop");
+        // default view
+        toolbar.setTitle("Home");
+        loadFragment(new HomeFragment());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
