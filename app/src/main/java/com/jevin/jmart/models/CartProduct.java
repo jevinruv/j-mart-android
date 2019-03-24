@@ -6,21 +6,15 @@ public class CartProduct {
 
     @SerializedName("id")
     private int id;
+
     @SerializedName("quantity")
     private int quantity;
+
     @SerializedName("product")
     private Product product;
-    @SerializedName("cart")
-    private Cart cart;
+
 
     public CartProduct() {
-    }
-
-    public CartProduct(int id, int quantity, Product product, Cart cart) {
-        this.id = id;
-        this.quantity = quantity;
-        this.product = product;
-        this.cart = cart;
     }
 
     public int getId() {
@@ -47,11 +41,4 @@ public class CartProduct {
         this.product = product;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 }

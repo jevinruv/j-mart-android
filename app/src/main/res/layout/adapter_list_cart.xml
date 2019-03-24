@@ -19,10 +19,12 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="1dp"
                 android:fadingEdge="horizontal|vertical"
                 android:fadingEdgeLength="20dp"
+                android:padding="1dp"
                 android:requiresFadingEdge="horizontal|vertical"
                 android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -30,6 +32,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="7dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -46,49 +49,78 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/lbl_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:padding="2dp"
-                    android:text="Category" />
-
-                <TextView
                     android:id="@+id/lbl_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="2dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginBottom="4dp"
                     android:padding="2dp"
                     android:text="Price"
                     android:textColor="@color/red" />
 
-                <RelativeLayout
+
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginBottom="4dp"
                     android:orientation="horizontal"
-                    android:paddingBottom="4dp">
+                    android:padding="2dp">
 
                     <Button
-                        android:id="@+id/btn_add_to_cart"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/btn_sub"
+                        android:layout_width="50dp"
                         android:layout_height="35dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentRight="false"
+                        android:layout_gravity="left|center_vertical"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:background="@drawable/btn_round_corner_green"
-                        android:text="Add to Cart"
+                        android:text="-"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/lbl_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:padding="2dp"
+                        android:text="Quantity" />
+
+                    <Button
+                        android:id="@+id/btn_add"
+                        android:layout_width="50dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/btn_round_corner_green"
+                        android:text="+"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <Button
+                        android:id="@+id/btn_remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_alignParentRight="false"
+                        android:layout_gravity="right|center_horizontal|end"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/btn_round_corner_red"
+                        android:text="Remove"
                         android:textAllCaps="false"
                         android:textColor="@color/white" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

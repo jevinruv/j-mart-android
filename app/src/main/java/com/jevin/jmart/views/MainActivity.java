@@ -1,35 +1,18 @@
 package com.jevin.jmart.views;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jevin.jmart.R;
-import com.jevin.jmart.adapters.ProductsListAdapter;
+import com.jevin.jmart.fragments.CartFragment;
 import com.jevin.jmart.fragments.CategoryFragment;
 import com.jevin.jmart.fragments.HomeFragment;
-import com.jevin.jmart.models.Product;
-import com.jevin.jmart.services.APIClient;
-import com.jevin.jmart.services.ProductService;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_cart:
                     toolbar.setTitle("Cart");
+                    fragment = new CartFragment();
+                    loadFragment(fragment);
                     return true;
+
+
             }
             return false;
         }
