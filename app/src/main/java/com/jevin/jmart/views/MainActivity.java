@@ -1,5 +1,6 @@
 package com.jevin.jmart.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,63 +14,30 @@ import com.jevin.jmart.R;
 import com.jevin.jmart.fragments.CartFragment;
 import com.jevin.jmart.fragments.CategoryFragment;
 import com.jevin.jmart.fragments.HomeFragment;
+import com.jevin.jmart.services.SharedPreferencesManager;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ActionBar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = getSupportActionBar();
-
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        // default view
-        toolbar.setTitle("Home");
-        loadFragment(new HomeFragment());
+        init();
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private void init() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Fragment fragment;
+        String authToken = SharedPreferencesManager.getAuthToken(this);
 
-            switch (menuItem.getItemId()) {
-                case R.id.navigation_home:
-                    toolbar.setTitle("Home");
-                    fragment = new HomeFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_categories:
-                    toolbar.setTitle("Categories");
-                    fragment = new CategoryFragment();
-                    loadFragment(fragment);
-                    return true;
-                case R.id.navigation_cart:
-                    toolbar.setTitle("Cart");
-                    fragment = new CartFragment();
-                    loadFragment(fragment);
-                    return true;
-
-
-            }
-            return false;
+        if (authToken.isEmpty()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
-    };
-
-    private void loadFragment(Fragment fragment) {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        else{
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        }
     }
-
 
 }

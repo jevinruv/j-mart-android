@@ -14,10 +14,8 @@ import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.CartListAdapter;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
-import com.jevin.jmart.models.Category;
 import com.jevin.jmart.services.APIClient;
 import com.jevin.jmart.services.CartService;
-import com.jevin.jmart.services.CategoryService;
 import com.jevin.jmart.services.SharedPreferencesManager;
 
 import java.util.ArrayList;
