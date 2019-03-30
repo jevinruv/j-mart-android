@@ -16,6 +16,7 @@ import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
 import com.jevin.jmart.services.APIClient;
 import com.jevin.jmart.services.CartService;
+import com.jevin.jmart.services.ICartService;
 import com.jevin.jmart.services.SharedPreferencesManager;
 
 import java.util.ArrayList;
@@ -53,13 +54,14 @@ public class CartFragment extends Fragment {
     }
 
     private void fetchCart() {
-        CartService categoryService = APIClient.getClient().create(CartService.class);
+
+        ICartService cartService = APIClient.getClient().create(ICartService.class);
 
         SharedPreferencesManager.setCartId(getContext(), 1);
 
         int cartId = SharedPreferencesManager.getCartId(getContext());
 
-        Call<Cart> call = categoryService.get(cartId);
+        Call<Cart> call = cartService.get(cartId);
 
         call.enqueue(new Callback<Cart>() {
             @Override

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -16,11 +17,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jevin.jmart.R;
+import com.jevin.jmart.forms.ShoppingCartForm;
+import com.jevin.jmart.models.CartProduct;
 import com.jevin.jmart.models.Product;
+import com.jevin.jmart.services.APIClient;
+import com.jevin.jmart.services.CartService;
+import com.jevin.jmart.services.SharedPreferencesManager;
 import com.jevin.jmart.views.ProductDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapter.MyViewHolder> implements Filterable {
 
@@ -30,8 +40,9 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, price, category;
-        public ImageView icAdd, icRemove, image;
+        public ImageView image;
         public CardView cardView;
+        public Button btnAddToCart;
 
         public MyViewHolder(View view) {
             super(view);
@@ -40,9 +51,8 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
             price = view.findViewById(R.id.lbl_price);
             category = view.findViewById(R.id.lbl_category);
             image = view.findViewById(R.id.image);
-//            icAdd =  view.findViewById(R.id.ic_add);
-//            icRemove =  view.findViewById(R.id.ic_remove);
             cardView = view.findViewById(R.id.card);
+            btnAddToCart = view.findViewById(R.id.btn_add_to_cart);
         }
     }
 
@@ -76,13 +86,10 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
             context.startActivity(intent);
         });
 
-//        holder.icAdd.setOnClickListener(view -> {
-//            Toast.makeText(context, "add", Toast.LENGTH_SHORT).show();
-//        });
-//
-//        holder.icRemove.setOnClickListener(view -> {
-//            Toast.makeText(context, "rem", Toast.LENGTH_SHORT).show();
-//        });
+        holder.btnAddToCart.setOnClickListener(view -> {
+            addToCart(product);
+        });
+
 
     }
 
@@ -126,6 +133,12 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
                 notifyDataSetChanged();
             }
         };
+    }
+
+    private void addToCart(Product product) {
+
+        CartService cartService = new CartService();
+        cartService.addOrUpdate(context, product.getId(), 1);
     }
 
 

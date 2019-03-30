@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +16,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jevin.jmart.R;
-import com.jevin.jmart.forms.ShoppingCartForm;
 import com.jevin.jmart.models.CartProduct;
 import com.jevin.jmart.models.Product;
-import com.jevin.jmart.services.APIClient;
 import com.jevin.jmart.services.CartService;
 import com.jevin.jmart.views.ProductDetailActivity;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyViewHolder> {
 
     private Context context;
     private List<CartProduct> cartProductList;
-    private static final String TAG = CartListAdapter.class.getSimpleName();
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -136,29 +128,13 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
 
     private void manageCartItem(CartProduct cartProduct, int quantity, String type) {
 
-        CartService categoryService = APIClient.getClient().create(CartService.class);
-        ShoppingCartForm shoppingCartForm = new ShoppingCartForm(cartProduct.getId(), cartProduct.getProduct().getId(), quantity);
-
-        Call<CartProduct> call = null;
+        CartService cartService = new CartService();
 
         if (type.equals("delete")) {
-            call = categoryService.deleteCartItem(shoppingCartForm);
+            cartService.deleteCartItem(context, cartProduct.getId(), quantity);
         } else {
-            call = categoryService.add(shoppingCartForm);
+            cartService.addOrUpdate(context, cartProduct.getId(), quantity);
         }
-
-        call.enqueue(new Callback<CartProduct>() {
-            @Override
-            public void onResponse(Call<CartProduct> call, Response<CartProduct> response) {
-                CartProduct cartProduct = response.body();
-                Log.d(TAG, "Number of cart product received: " + cartProduct);
-            }
-
-            @Override
-            public void onFailure(Call<CartProduct> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
     }
 
 }
