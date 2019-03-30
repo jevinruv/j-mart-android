@@ -10,18 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.CartListAdapter;
+import com.jevin.jmart.helpers.APIClient;
+import com.jevin.jmart.helpers.ICartListener;
+import com.jevin.jmart.helpers.MyApplication;
+import com.jevin.jmart.helpers.SharedPreferencesManager;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
-import com.jevin.jmart.services.APIClient;
 import com.jevin.jmart.services.ICartService;
-import com.jevin.jmart.services.PusherClient;
-import com.jevin.jmart.services.SharedPreferencesManager;
-import com.pusher.client.Pusher;
-import com.pusher.client.channel.Channel;
-import com.pusher.client.channel.SubscriptionEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements ICartListener {
 
     private RecyclerView recyclerView;
     private List<CartProduct> cartProductList;
@@ -52,8 +49,8 @@ public class CartFragment extends Fragment {
         cartListAdapter = new CartListAdapter(getActivity(), cartProductList);
         recyclerView.setAdapter(cartListAdapter);
 
+        MyApplication.setiCartListener(this);
         fetchCart();
-        init();
 
         return view;
     }
@@ -86,35 +83,29 @@ public class CartFragment extends Fragment {
         });
     }
 
-    public void init() {
 
-        String CHANNEL_NAME = "cart" + SharedPreferencesManager.getCartId(getContext());
-
-        Pusher pusher = PusherClient.getPusher();
-        Channel channel = pusher.subscribe(CHANNEL_NAME);
-
-        SubscriptionEventListener eventListener = new SubscriptionEventListener() {
-            @Override
-            public void onEvent(String channel, final String event, final String data) {
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        System.out.println("Received event with data: " + data);
-
-                        Gson gson = new Gson();
-                        CartProduct cartProduct = gson.fromJson(data, CartProduct.class);
-                        cartListAdapter.addItem(cartProduct);
-                    }
-
-                });
-            }
-        };
-
-        channel.bind("itemAdded", eventListener);
-        channel.bind("itemUpdated", eventListener);
-        channel.bind("itemRemoved", eventListener);
+    @Override
+    public void itemAdded(CartProduct cartProduct) {
+        cartListAdapter.addItem(cartProduct);
     }
 
+    @Override
+    public void itemUpdated(CartProduct cartProduct) {
 
+    }
+
+    @Override
+    public void itemRemoved(CartProduct cartProduct) {
+
+    }
+
+    @Override
+    public void cartCleared() {
+
+    }
+
+    @Override
+    public void cartCheckOut() {
+
+    }
 }

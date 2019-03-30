@@ -2,19 +2,10 @@ package com.jevin.jmart.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 
 import com.jevin.jmart.R;
-import com.jevin.jmart.fragments.CartFragment;
-import com.jevin.jmart.fragments.CategoryFragment;
-import com.jevin.jmart.fragments.HomeFragment;
-import com.jevin.jmart.services.SharedPreferencesManager;
+import com.jevin.jmart.helpers.SharedPreferencesManager;
 
 public class MainActivity extends AppCompatActivity {
 

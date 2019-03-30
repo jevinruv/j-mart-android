@@ -1,4 +1,4 @@
-package com.jevin.jmart.services;
+package com.jevin.jmart.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

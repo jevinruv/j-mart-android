@@ -2,7 +2,6 @@ package com.jevin.jmart.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,7 @@ import android.view.ViewGroup;
 import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.ProductsListAdapter;
 import com.jevin.jmart.models.Product;
-import com.jevin.jmart.services.APIClient;
+import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.services.ProductService;
 
 import java.util.ArrayList;

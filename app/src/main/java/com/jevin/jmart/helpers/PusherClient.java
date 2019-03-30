@@ -1,4 +1,4 @@
-package com.jevin.jmart.services;
+package com.jevin.jmart.helpers;
 
 import com.pusher.client.Pusher;
 import com.pusher.client.PusherOptions;

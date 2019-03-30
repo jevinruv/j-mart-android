@@ -4,15 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.jevin.jmart.R;
 import com.jevin.jmart.forms.LoginForm;
 import com.jevin.jmart.models.JwtResponse;
-import com.jevin.jmart.services.APIClient;
+import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.services.AuthService;
-import com.jevin.jmart.services.SharedPreferencesManager;
+import com.jevin.jmart.helpers.SharedPreferencesManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
