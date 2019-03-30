@@ -1,9 +1,14 @@
 package com.jevin.jmart.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class JwtResponse {
 
+    @SerializedName("accessToken")
     private String accessToken;
+    @SerializedName("username")
     private String username;
+    @SerializedName("userId")
     private int userId;
 
     public JwtResponse() {

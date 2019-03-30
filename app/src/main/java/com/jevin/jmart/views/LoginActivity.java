@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText username;
     private EditText password;
-    private Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
         username = findViewById(R.id.input_username);
         password = findViewById(R.id.input_password);
-        btnLogin = findViewById(R.id.btn_login);
     }
 
     public void btnLoginClicked(View view) {

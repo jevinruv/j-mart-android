@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jevin.jmart.R;
+import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
 import com.jevin.jmart.models.Product;
 import com.jevin.jmart.services.CartService;
@@ -101,6 +102,11 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
     @Override
     public int getItemCount() {
         return cartProductList.size();
+    }
+
+    public void addItem(CartProduct cartProduct) {
+        cartProductList.add(0, cartProduct);
+        notifyItemInserted(0);
     }
 
     private void btnAddClicked(MyViewHolder holder, CartProduct cartProduct) {

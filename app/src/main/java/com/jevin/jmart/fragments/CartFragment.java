@@ -10,14 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.CartListAdapter;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
 import com.jevin.jmart.services.APIClient;
-import com.jevin.jmart.services.CartService;
 import com.jevin.jmart.services.ICartService;
+import com.jevin.jmart.services.PusherClient;
 import com.jevin.jmart.services.SharedPreferencesManager;
+import com.pusher.client.Pusher;
+import com.pusher.client.channel.Channel;
+import com.pusher.client.channel.SubscriptionEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,7 @@ public class CartFragment extends Fragment {
         recyclerView.setAdapter(cartListAdapter);
 
         fetchCart();
+        init();
 
         return view;
     }
@@ -80,5 +85,36 @@ public class CartFragment extends Fragment {
             }
         });
     }
+
+    public void init() {
+
+        String CHANNEL_NAME = "cart" + SharedPreferencesManager.getCartId(getContext());
+
+        Pusher pusher = PusherClient.getPusher();
+        Channel channel = pusher.subscribe(CHANNEL_NAME);
+
+        SubscriptionEventListener eventListener = new SubscriptionEventListener() {
+            @Override
+            public void onEvent(String channel, final String event, final String data) {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        System.out.println("Received event with data: " + data);
+
+                        Gson gson = new Gson();
+                        CartProduct cartProduct = gson.fromJson(data, CartProduct.class);
+                        cartListAdapter.addItem(cartProduct);
+                    }
+
+                });
+            }
+        };
+
+        channel.bind("itemAdded", eventListener);
+        channel.bind("itemUpdated", eventListener);
+        channel.bind("itemRemoved", eventListener);
+    }
+
 
 }
