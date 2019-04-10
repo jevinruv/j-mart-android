@@ -57,12 +57,9 @@ public class CartFragment extends Fragment implements ICartListener {
 
     private void fetchCart() {
 
-        ICartService cartService = APIClient.getClient().create(ICartService.class);
-
-        SharedPreferencesManager.setCartId(getContext(), 1);
-
         int cartId = SharedPreferencesManager.getCartId(getContext());
 
+        ICartService cartService = APIClient.getClient().create(ICartService.class);
         Call<Cart> call = cartService.get(cartId);
 
         call.enqueue(new Callback<Cart>() {
@@ -91,12 +88,12 @@ public class CartFragment extends Fragment implements ICartListener {
 
     @Override
     public void itemUpdated(CartProduct cartProduct) {
-
+        cartListAdapter.updateItem(cartProduct);
     }
 
     @Override
     public void itemRemoved(CartProduct cartProduct) {
-
+        cartListAdapter.removeItem(cartProduct);
     }
 
     @Override

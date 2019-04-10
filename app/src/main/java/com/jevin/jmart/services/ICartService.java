@@ -13,12 +13,15 @@ import retrofit2.http.Path;
 
 public interface ICartService {
 
-    @GET("/carts/{id}")
+    @GET("carts/{id}")
     Call<Cart> get(@Path("id") int id);
 
-    @POST("/carts")
+    @POST("carts")
     Call<CartProduct> addOrUpdate(@Body ShoppingCartForm shoppingCartForm);
 
-    @HTTP(method = "DELETE", path = "/carts", hasBody = true)
+    @POST("carts/fetch")
+    Call<Cart> fetchCart(@Body int userId);
+
+    @HTTP(method = "DELETE", path = "carts", hasBody = true)
     Call<CartProduct> deleteCartItem(@Body ShoppingCartForm shoppingCartForm);
 }

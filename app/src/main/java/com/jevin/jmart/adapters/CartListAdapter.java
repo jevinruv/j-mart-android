@@ -109,6 +109,21 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
         notifyItemInserted(0);
     }
 
+    public void updateItem(CartProduct cartProduct) {
+        CartProduct cartProductSearched = cartProductList.stream().filter(cartProd ->
+                cartProd.getProduct().getId() == cartProd.getProduct().getId()).findFirst().get();
+
+        int index = cartProductList.indexOf(cartProductSearched);
+        cartProductList.get(index).setQuantity(cartProduct.getQuantity());
+        notifyItemChanged(index);
+    }
+
+    public void removeItem(CartProduct cartProduct) {
+        int index = cartProductList.indexOf(cartProduct);
+        cartProductList.remove(index);
+        notifyItemRemoved(index);
+    }
+
     private void btnAddClicked(MyViewHolder holder, CartProduct cartProduct) {
 
         int quantity = Integer.parseInt(holder.quantity.getText().toString());

@@ -12,6 +12,7 @@ import com.jevin.jmart.models.JwtResponse;
 import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.services.AuthService;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
+import com.jevin.jmart.services.CartService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,11 +60,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void setValues(JwtResponse jwtResponse){
+    private void setValues(JwtResponse jwtResponse) {
 
         SharedPreferencesManager.setAuthToken(this, jwtResponse.getAccessToken());
         SharedPreferencesManager.setUserId(this, jwtResponse.getUserId());
         SharedPreferencesManager.setUsername(this, jwtResponse.getUsername());
+        new CartService().initGetCart(this);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);

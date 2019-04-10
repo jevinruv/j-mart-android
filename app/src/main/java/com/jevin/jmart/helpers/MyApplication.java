@@ -75,9 +75,21 @@ public class MyApplication extends Application {
             }
         };
 
+        SubscriptionEventListener itemRemovedListener = new SubscriptionEventListener() {
+            @Override
+            public void onEvent(String channel, String event, final String data) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+//                        System.out.println("DATA ====>>" + data);
+                    Gson gson = new Gson();
+                    CartProduct cartProduct = gson.fromJson(data, CartProduct.class);
+                    iCartListener.itemRemoved(cartProduct);
+                });
+            }
+        };
+
         channelCart.bind("itemAdded", itemAddedListener);
         channelCart.bind("itemUpdated", itemUpdatedListener);
-//        channelCart.bind("itemRemoved", eventListener);
+        channelCart.bind("itemRemoved", itemRemovedListener);
     }
 
 
