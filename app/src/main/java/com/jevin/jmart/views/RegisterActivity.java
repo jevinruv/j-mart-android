@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -99,9 +100,27 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validate() {
         return validateInput(name, inputLayoutName) &&
-                validateInput(email, inputLayoutEmail) &&
+                validateEmail() &&
                 validateInput(username, inputLayoutUsername) &&
                 validateInput(password, inputLayoutPassword);
+    }
+
+    private boolean validateEmail() {
+        String strEmail = email.getText().toString().trim();
+
+        if (strEmail.isEmpty() || !isValidEmail(strEmail)) {
+            inputLayoutEmail.setError(getString(R.string.err_msg_invalid));
+            requestFocus(email);
+            return false;
+        } else {
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean validateInput(EditText editText, TextInputLayout textInputLayout) {

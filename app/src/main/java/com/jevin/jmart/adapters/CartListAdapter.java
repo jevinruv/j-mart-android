@@ -110,8 +110,12 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
     }
 
     public void updateItem(CartProduct cartProduct) {
-        CartProduct cartProductSearched = cartProductList.stream().filter(cartProd ->
-                cartProd.getProduct().getId() == cartProd.getProduct().getId()).findFirst().get();
+
+        CartProduct cartProductSearched = cartProductList
+                .stream()
+                .filter(cartProd -> cartProd.getProduct().getId() == cartProduct.getProduct().getId())
+                .findAny()
+                .get();
 
         int index = cartProductList.indexOf(cartProductSearched);
         cartProductList.get(index).setQuantity(cartProduct.getQuantity());
@@ -119,7 +123,14 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
     }
 
     public void removeItem(CartProduct cartProduct) {
-        int index = cartProductList.indexOf(cartProduct);
+
+        CartProduct cartProductSearched = cartProductList
+                .stream()
+                .filter(cartProd -> cartProd.getProduct().getId() == cartProduct.getProduct().getId())
+                .findAny()
+                .get();
+
+        int index = cartProductList.indexOf(cartProductSearched);
         cartProductList.remove(index);
         notifyItemRemoved(index);
     }
@@ -152,9 +163,9 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.MyView
         CartService cartService = new CartService();
 
         if (type.equals("delete")) {
-            cartService.deleteCartItem(context, cartProduct.getId(), quantity);
+            cartService.deleteCartItem(context, cartProduct.getProduct().getId(), quantity);
         } else {
-            cartService.addOrUpdate(context, cartProduct.getId(), quantity);
+            cartService.addOrUpdate(context, cartProduct.getProduct().getId(), quantity);
         }
     }
 
