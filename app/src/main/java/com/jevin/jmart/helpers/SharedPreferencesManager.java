@@ -60,5 +60,11 @@ public class SharedPreferencesManager {
     public static String getUsername(Context context) {
         return getSharedPreferences(context).getString(USERNAME, "");
     }
+
+    public static void deleteAll(Context context){
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.clear();
+        editor.commit();
+    }
     
 }

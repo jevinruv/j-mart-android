@@ -1,5 +1,6 @@
 package com.jevin.jmart.views;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -57,7 +58,10 @@ public class HomeActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
 
-
+                case R.id.navigation_more:
+                    Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
+                    startActivity(intent);
+                    return true;
             }
             return false;
         }

@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_cart"
         android:title="Cart" />
 
+    <item
+        android:id="@+id/navigation_more"
+        android:icon="@drawable/ic_dots"
+        android:title="More" />
+
 </menu>

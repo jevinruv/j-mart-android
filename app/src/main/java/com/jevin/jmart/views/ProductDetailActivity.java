@@ -4,11 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.jevin.jmart.R;
 import com.jevin.jmart.models.Product;
@@ -30,7 +27,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void init() {
 
-        name = findViewById(R.id.name);
+        name = findViewById(R.id.txt_username);
         price = findViewById(R.id.price);
         description = findViewById(R.id.description);
         image = findViewById(R.id.image);
