@@ -15,6 +15,9 @@
         <activity
             android:name=".views.LoginActivity"
             android:theme="@style/AppFullScreenTheme" />
+        <activity
+            android:name=".views.RegisterActivity"
+            android:theme="@style/AppFullScreenTheme" />
         <activity android:name=".views.HomeActivity" />
         <activity android:name=".views.ProductDetailActivity" />
         <activity android:name=".views.MainActivity">
