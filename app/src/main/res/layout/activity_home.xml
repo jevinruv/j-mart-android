@@ -20,7 +20,7 @@
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         android:foreground="?attr/selectableItemBackground"
-        app:itemBackground="@color/bg_clolor"
+        app:itemBackground="@color/bg_color"
         app:itemIconTint="@android:color/black"
         app:itemTextColor="@color/colorPrimaryDark"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"

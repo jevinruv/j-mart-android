@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jevin.jmart.R;
 import com.jevin.jmart.forms.LoginForm;
@@ -37,6 +38,11 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.input_password);
     }
 
+    public void txtSignupClicked(View view){
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+    }
+
     public void btnLoginClicked(View view) {
 
         if (!username.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
@@ -49,7 +55,13 @@ public class LoginActivity extends AppCompatActivity {
             call.enqueue(new Callback<JwtResponse>() {
                 @Override
                 public void onResponse(Call<JwtResponse> call, Response<JwtResponse> response) {
-                    setValues(response.body());
+
+                    if(response.isSuccessful()){
+                        setValues(response.body());
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override
@@ -67,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferencesManager.setUsername(this, jwtResponse.getUsername());
         new CartService().initGetCart(this);
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
