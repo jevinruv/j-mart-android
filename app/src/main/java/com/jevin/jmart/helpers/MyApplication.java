@@ -58,7 +58,9 @@ public class MyApplication extends Application {
 //                        System.out.println("DATA ====>>" + data);
                     Gson gson = new Gson();
                     CartProduct cartProduct = gson.fromJson(data, CartProduct.class);
-                    iCartListener.itemAdded(cartProduct);
+                    if(iCartListener != null) {
+                        iCartListener.itemAdded(cartProduct);
+                    }
                 });
             }
         };
@@ -70,7 +72,9 @@ public class MyApplication extends Application {
 //                        System.out.println("DATA ====>>" + data);
                     Gson gson = new Gson();
                     CartProduct cartProduct = gson.fromJson(data, CartProduct.class);
-                    iCartListener.itemUpdated(cartProduct);
+                    if(iCartListener != null) {
+                        iCartListener.itemUpdated(cartProduct);
+                    }
                 });
             }
         };
@@ -82,7 +86,9 @@ public class MyApplication extends Application {
 //                        System.out.println("DATA ====>>" + data);
                     Gson gson = new Gson();
                     CartProduct cartProduct = gson.fromJson(data, CartProduct.class);
-                    iCartListener.itemRemoved(cartProduct);
+                    if(iCartListener != null){
+                        iCartListener.itemRemoved(cartProduct);
+                    }
                 });
             }
         };
