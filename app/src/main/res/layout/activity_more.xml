@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
-            android:background="@drawable/gray_categories_rect"
+            android:background="@color/light_grey"
             android:elevation="4dp"
             android:paddingBottom="24dp">
 
@@ -58,7 +58,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:clickable="true"
-
                 android:src="@android:drawable/ic_menu_edit" />
 
             <TextView

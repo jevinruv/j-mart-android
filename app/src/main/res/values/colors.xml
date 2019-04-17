@@ -22,6 +22,7 @@
     <color name="keyboard">#fafafa</color>
     <color name="bg_color">#fafafa</color>
     <color name="grey">#E6E6E6</color>
+    <color name="light_grey">#DADEE3</color>
 
     <!--<color name="colorPrimary">#008577</color>-->
     <!--<color name="colorPrimaryDark">#00574B</color>-->
