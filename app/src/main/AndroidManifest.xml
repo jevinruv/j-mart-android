@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.MoreActivity"></activity>
+        <activity
+            android:name=".views.ProductDetailActivity"
+            android:label="@string/title_activity_product_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".views.MoreActivity" />
         <activity
             android:name=".views.LoginActivity"
             android:theme="@style/AppFullScreenTheme" />
@@ -20,7 +24,6 @@
             android:name=".views.RegisterActivity"
             android:theme="@style/AppFullScreenTheme" />
         <activity android:name=".views.HomeActivity" />
-        <activity android:name=".views.ProductDetailActivity" />
         <activity android:name=".views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

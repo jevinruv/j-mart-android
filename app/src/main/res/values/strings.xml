@@ -9,4 +9,6 @@
     <string name="cart_empty">Cart Empty!</string>
     <string name="err_msg_empty">Empty Input</string>
     <string name="err_msg_invalid">Invalid</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
