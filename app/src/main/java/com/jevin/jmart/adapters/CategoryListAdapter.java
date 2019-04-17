@@ -1,6 +1,7 @@
 package com.jevin.jmart.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jevin.jmart.R;
 import com.jevin.jmart.models.Category;
+import com.jevin.jmart.views.SearchActivity;
 
 import java.util.List;
 
@@ -54,13 +56,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         holder.name.setText(category.getName());
         Glide.with(context).load(category.getImageUrl()).into(holder.image);
 
-//        holder.card.setOnClickListener(view -> {
-//            Intent intent = new Intent(context, ProductDetailActivity_2.class);
-//            Gson gson = new Gson();
-//            String categoryJson = gson.toJson(category);
-//            intent.putExtra("category", categoryJson);
-//            context.startActivity(intent);
-//        });
+        holder.card.setOnClickListener(view -> {
+            Intent intent = new Intent(context, SearchActivity.class);
+            intent.putExtra("searchKey", category.getCode());
+            context.startActivity(intent);
+        });
 
     }
 

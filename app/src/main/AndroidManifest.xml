@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".views.SearchActivity"></activity>
         <activity
             android:name=".views.ProductDetailActivity"
             android:label="@string/title_activity_product_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.MoreActivity" />
         <activity
             android:name=".views.LoginActivity"
