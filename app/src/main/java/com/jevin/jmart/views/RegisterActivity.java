@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jevin.jmart.R;
+import com.jevin.jmart.fragments.CartFragment;
 import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.models.User;
 import com.jevin.jmart.services.AuthService;
@@ -25,6 +27,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private static final String TAG = RegisterActivity.class.getSimpleName();
 
     private EditText name, email, username, password;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutUsername, inputLayoutPassword;
@@ -76,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             Toast.makeText(getApplicationContext(), response.body().getString("message"), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e(TAG, e.toString());
                         }
 
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -85,14 +89,14 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             Toast.makeText(getApplicationContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Log.e(TAG, e.toString());
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<JSONObject> call, Throwable t) {
-
+                    Log.e(TAG, t.toString());
                 }
             });
         }

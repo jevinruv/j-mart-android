@@ -32,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
+
 public class ProductDetailActivity extends AppCompatActivity {
 
     private TextView lblDiscountPrice, lblPrice, lblDescription, lblQuantity;
@@ -146,6 +148,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         lblPrice.setText(this.getString(R.string.price_with_currency, product.getPrice()));
         lblDescription.setText(product.getDescription());
+
         Glide.with(this).load(product.getImageUrl()).into(image);
     }
 
