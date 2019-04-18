@@ -1,7 +1,9 @@
 package com.jevin.jmart.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.jevin.jmart.helpers.SharedPreferencesManager;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
 import com.jevin.jmart.services.ICartService;
+import com.jevin.jmart.views.CheckoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +32,24 @@ import retrofit2.Response;
 
 public class CartFragment extends Fragment implements ICartListener {
 
-    private RecyclerView recyclerView;
-    private List<CartProduct> cartProductList;
-    private CartListAdapter cartListAdapter;
     private static final String TAG = CartFragment.class.getSimpleName();
+
+    private RecyclerView recyclerView;
+    private FloatingActionButton btnCheckout;
+
+    private List<CartProduct> cartProductList = new ArrayList<>();
+    private CartListAdapter cartListAdapter;
 
     public CartFragment() {
     }
 
+    public void btnCheckoutClicked() {
+
+        if (!cartProductList.isEmpty()) {
+            Intent intent = new Intent(getContext(), CheckoutActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,10 +57,16 @@ public class CartFragment extends Fragment implements ICartListener {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
+        btnCheckout = view.findViewById(R.id.btn_checkout);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         cartProductList = new ArrayList<>();
         cartListAdapter = new CartListAdapter(getActivity(), cartProductList);
         recyclerView.setAdapter(cartListAdapter);
+
+        btnCheckout.setOnClickListener(v -> {
+            btnCheckoutClicked();
+        });
 
         MyApplication.setiCartListener(this);
         fetchCart();
@@ -66,9 +85,12 @@ public class CartFragment extends Fragment implements ICartListener {
             @Override
             public void onResponse(Call<Cart> call, Response<Cart> response) {
                 Cart cart = response.body();
-                cartProductList.clear();
-                cartProductList.addAll(cart.getCartProducts());
-                cartListAdapter.notifyDataSetChanged();
+
+                if(!cart.getCartProducts().isEmpty()){
+                    cartProductList.clear();
+                    cartProductList.addAll(cart.getCartProducts());
+                    cartListAdapter.notifyDataSetChanged();
+                }
 
                 Log.d(TAG, "Number of cart products received: " + cartProductList.size());
             }

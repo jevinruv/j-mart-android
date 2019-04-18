@@ -6,14 +6,17 @@
 
     <application
         android:name=".helpers.MyApplication"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".views.SearchActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".views.CheckoutActivity"
+            android:label="@string/title_activity_checkout"></activity>
+        <activity android:name=".views.SearchActivity" />
         <activity
             android:name=".views.ProductDetailActivity"
             android:label="@string/title_activity_product_detail"

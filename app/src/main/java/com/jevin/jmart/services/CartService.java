@@ -34,7 +34,7 @@ public class CartService {
 
             @Override
             public void onFailure(Call<CartProduct> call, Throwable t) {
-
+                Log.e(TAG, t.toString());
             }
         });
     }
@@ -56,9 +56,33 @@ public class CartService {
 
             @Override
             public void onFailure(Call<CartProduct> call, Throwable t) {
-
+                Log.e(TAG, t.toString());
             }
         });
+    }
+
+    public void deleteCart(Context context) {
+
+        int cartId = SharedPreferencesManager.getCartId(context);
+        ICartService cartService = APIClient.getClient().create(ICartService.class);
+
+        Call<Void> call = cartService.deleteCart(cartId);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+                if (response.isSuccessful()) {
+                    initGetCart(context);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+
     }
 
     public void initGetCart(Context context) {
@@ -78,7 +102,7 @@ public class CartService {
 
             @Override
             public void onFailure(Call<Cart> call, Throwable t) {
-
+                Log.e(TAG, t.toString());
             }
         });
     }
