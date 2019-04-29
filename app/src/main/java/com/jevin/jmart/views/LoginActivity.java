@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferencesManager.setAuthToken(this, jwtResponse.getAccessToken());
         SharedPreferencesManager.setUserId(this, jwtResponse.getUserId());
         SharedPreferencesManager.setUsername(this, jwtResponse.getUsername());
-        new CartService().initGetCart(this);
+//        new CartService().initGetCart(this);
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

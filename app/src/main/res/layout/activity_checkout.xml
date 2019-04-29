@@ -38,34 +38,19 @@
 
 
     <Button
-        android:id="@+id/btn_clear_cart"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btn_round_corner_red"
-        android:onClick="btnClearCartClicked"
-        android:text="Clear Cart"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2"
-        app:layout_constraintVertical_bias="0.97" />
-
-    <Button
         android:id="@+id/btn_pay"
-        android:layout_width="150dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/btn_round_corner_green"
+        android:onClick="btnPayClicked"
         android:text="Pay"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.989"
-        app:layout_constraintStart_toEndOf="@+id/btn_clear_cart"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2"
         app:layout_constraintVertical_bias="0.97" />
 
@@ -115,9 +100,9 @@
                 android:id="@+id/seperator"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="100dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginEnd="100dp"
                 android:background="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -196,7 +181,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:focusableInTouchMode="false"
                     android:hint="Card Number"
                     android:inputType="number"
                     android:singleLine="true" />

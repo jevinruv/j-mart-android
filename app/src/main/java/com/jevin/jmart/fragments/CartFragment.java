@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.CartListAdapter;
@@ -36,6 +38,7 @@ public class CartFragment extends Fragment implements ICartListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton btnCheckout;
+    private TextView lblEmpty;
 
     private List<CartProduct> cartProductList = new ArrayList<>();
     private CartListAdapter cartListAdapter;
@@ -49,6 +52,9 @@ public class CartFragment extends Fragment implements ICartListener {
             Intent intent = new Intent(getContext(), CheckoutActivity.class);
             startActivity(intent);
         }
+        else{
+            Toast.makeText(getContext(),getString(R.string.empty_cart),Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -58,6 +64,7 @@ public class CartFragment extends Fragment implements ICartListener {
 
         recyclerView = view.findViewById(R.id.recycler_view);
         btnCheckout = view.findViewById(R.id.btn_checkout);
+        lblEmpty = view.findViewById(R.id.lbl_empty);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         cartProductList = new ArrayList<>();
@@ -90,6 +97,9 @@ public class CartFragment extends Fragment implements ICartListener {
                     cartProductList.clear();
                     cartProductList.addAll(cart.getCartProducts());
                     cartListAdapter.notifyDataSetChanged();
+                }
+                else{
+                    lblEmpty.setVisibility(View.VISIBLE);
                 }
 
                 Log.d(TAG, "Number of cart products received: " + cartProductList.size());

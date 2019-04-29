@@ -1,9 +1,8 @@
 package com.jevin.jmart.views;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,7 @@ import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
-import com.jevin.jmart.services.CartService;
+import com.jevin.jmart.services.CheckoutService;
 import com.jevin.jmart.services.ICartService;
 
 import java.util.ArrayList;
@@ -57,14 +56,29 @@ public class CheckoutActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void btnClearCartClicked(View view) {
-        CartService cartService = new CartService();
-        cartService.deleteCart(this);
+    public void btnPayClicked(View view) {
+        int cartId = SharedPreferencesManager.getCartId(this);
 
-        Toast.makeText(this, "Cart Cleared", Toast.LENGTH_SHORT).show();
+        CheckoutService checkoutService = APIClient.getClient().create(CheckoutService.class);
+        Call<Cart> call = checkoutService.doCheckOut(cartId);
 
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+        call.enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+                Cart cart = response.body();
+                int cartId = cart.getId();
+                SharedPreferencesManager.setCartId(getApplicationContext(), cartId);
+
+                Toast.makeText(getApplicationContext(),getString(R.string.checkout_success),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     private void fetchCart() {

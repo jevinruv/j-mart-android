@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.jevin.jmart.R;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
+import com.jevin.jmart.services.CartService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
+            new CartService().initGetCart(this);
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }

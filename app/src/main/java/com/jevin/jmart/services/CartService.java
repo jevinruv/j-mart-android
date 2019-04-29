@@ -1,6 +1,7 @@
 package com.jevin.jmart.services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.jevin.jmart.forms.ShoppingCartForm;
@@ -8,6 +9,7 @@ import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
+import com.jevin.jmart.views.HomeActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

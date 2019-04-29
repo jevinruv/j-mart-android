@@ -17,6 +17,7 @@ public class MoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         init();
         setValues();
@@ -24,8 +25,10 @@ public class MoreActivity extends AppCompatActivity {
 
     private void init() {
 
-        name = findViewById(R.id.txt_username);
-        email = findViewById(R.id.txt_email);
+        name = findViewById(R.id.lbl_username);
+        email = findViewById(R.id.lbl_email);
+
+        String[] optionsArray = {"Edit User", "Purchase History"};
     }
 
     private void setValues() {
