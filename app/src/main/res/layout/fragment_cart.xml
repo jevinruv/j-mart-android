@@ -24,7 +24,7 @@
                 android:gravity="center"
                 android:text="@string/cart_empty"
                 android:textSize="30sp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"

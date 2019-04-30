@@ -14,4 +14,5 @@
     <string name="title_activity_checkout">Checkout</string>
     <string name="checkout_success">Checkout Successful</string>
     <string name="empty_cart">Cart Empty</string>
+    <string name="activity_purchase_history">Purchase History</string>
 </resources>

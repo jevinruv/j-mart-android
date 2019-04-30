@@ -3,7 +3,9 @@ package com.jevin.jmart.views;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.jevin.jmart.R;
@@ -28,13 +30,17 @@ public class MoreActivity extends AppCompatActivity {
         name = findViewById(R.id.lbl_username);
         email = findViewById(R.id.lbl_email);
 
-        String[] optionsArray = {"Edit User", "Purchase History"};
     }
 
     private void setValues() {
 
         String username = SharedPreferencesManager.getUsername(this);
         name.setText(username);
+    }
+
+    public void btnViewPurchaseHistoryClicked(View view){
+        Intent intent = new Intent(this, PurchaseHistoryActivity.class);
+        startActivity(intent);
     }
 
     public void btnLogoutClicked(View view){
@@ -46,4 +52,17 @@ public class MoreActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    
 }
