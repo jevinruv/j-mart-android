@@ -15,4 +15,7 @@
     <string name="checkout_success">Checkout Successful</string>
     <string name="empty_cart">Cart Empty</string>
     <string name="activity_purchase_history">Purchase History</string>
+    <string name="activity_profile">Profile</string>
+    <string name="success_msg_updated">Successfully updated user data</string>
+    <string name="success_msg_deleted_user">Successfully deleted User</string>
 </resources>
