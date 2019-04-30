@@ -2,10 +2,13 @@ package com.jevin.jmart.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,8 @@ public class CheckoutActivity extends AppCompatActivity {
     private static final String TAG = CheckoutActivity.class.getSimpleName();
 
     private TextView lblQuantity, lblTotal;
+    private EditText inputCardNo;
+    private TextInputLayout inputLayoutCardNo;
 
     private List<CartProduct> cartProductList = new ArrayList<>();
 
@@ -56,29 +61,42 @@ public class CheckoutActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void init() {
+
+        lblQuantity = findViewById(R.id.lbl_quantity);
+        lblTotal = findViewById(R.id.lbl_total);
+
+        inputCardNo = findViewById(R.id.input_card_number);
+        inputLayoutCardNo = findViewById(R.id.input_layout_card_number);
+    }
+
     public void btnPayClicked(View view) {
-        int cartId = SharedPreferencesManager.getCartId(this);
 
-        CheckoutService checkoutService = APIClient.getClient().create(CheckoutService.class);
-        Call<Cart> call = checkoutService.doCheckOut(cartId);
+        if (validateInput(inputCardNo, inputLayoutCardNo)) {
+            
+            int cartId = SharedPreferencesManager.getCartId(this);
 
-        call.enqueue(new Callback<Cart>() {
-            @Override
-            public void onResponse(Call<Cart> call, Response<Cart> response) {
-                Cart cart = response.body();
-                int cartId = cart.getId();
-                SharedPreferencesManager.setCartId(getApplicationContext(), cartId);
+            CheckoutService checkoutService = APIClient.getClient().create(CheckoutService.class);
+            Call<Cart> call = checkoutService.doCheckOut(cartId);
 
-                Toast.makeText(getApplicationContext(),getString(R.string.checkout_success),Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
-            }
+            call.enqueue(new Callback<Cart>() {
+                @Override
+                public void onResponse(Call<Cart> call, Response<Cart> response) {
+                    Cart cart = response.body();
+                    int cartId = cart.getId();
+                    SharedPreferencesManager.setCartId(getApplicationContext(), cartId);
 
-            @Override
-            public void onFailure(Call<Cart> call, Throwable t) {
-                Log.e(TAG, t.toString());
-            }
-        });
+                    Toast.makeText(getApplicationContext(), getString(R.string.checkout_success), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Call<Cart> call, Throwable t) {
+                    Log.e(TAG, t.toString());
+                }
+            });
+        }
     }
 
     private void fetchCart() {
@@ -123,12 +141,23 @@ public class CheckoutActivity extends AppCompatActivity {
 
     }
 
+    private boolean validateInput(EditText editText, TextInputLayout textInputLayout) {
+        if (editText.getText().toString().trim().isEmpty()) {
 
-    private void init() {
+            textInputLayout.setError(getString(R.string.err_msg_empty));
+            requestFocus(editText);
+            return false;
+        } else {
+            textInputLayout.setErrorEnabled(false);
+        }
 
-        lblQuantity = findViewById(R.id.lbl_quantity);
-        lblTotal = findViewById(R.id.lbl_total);
+        return true;
     }
 
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
 
 }
