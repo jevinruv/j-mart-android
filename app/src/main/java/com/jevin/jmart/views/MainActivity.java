@@ -1,5 +1,6 @@
 package com.jevin.jmart.views;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -30,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Loading. Please wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     private void init() {
@@ -52,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+
+                progressDialog.dismiss();
 
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Token Valid");
