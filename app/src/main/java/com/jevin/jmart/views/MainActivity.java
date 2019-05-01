@@ -10,11 +10,8 @@ import android.widget.Toast;
 import com.jevin.jmart.R;
 import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
-import com.jevin.jmart.models.User;
 import com.jevin.jmart.services.CartService;
 import com.jevin.jmart.services.UserService;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         init();
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Loading. Please wait...");
+        progressDialog.setMessage(getString(R.string.msg_loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

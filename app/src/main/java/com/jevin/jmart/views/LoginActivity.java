@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
             progressDialog = new ProgressDialog(this);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Signing In. Please wait...");
+            progressDialog.setMessage(getString(R.string.msg_signing_in));
             progressDialog.setCancelable(false);
             progressDialog.show();
 

@@ -20,4 +20,6 @@
     <string name="success_msg_deleted_user">Successfully deleted User</string>
     <string name="err_msg_token_validation_fail">User validation Fail, Please Signin again!</string>
     <string name="err_msg_invalid_credentials">Invalid Credentials!</string>
+    <string name="msg_loading">Loading. Please wait...</string>
+    <string name="msg_signing_in">Signing In. Please wait...</string>
 </resources>

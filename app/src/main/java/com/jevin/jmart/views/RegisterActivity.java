@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jevin.jmart.R;
-import com.jevin.jmart.fragments.CartFragment;
 import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.models.User;
 import com.jevin.jmart.services.AuthService;
