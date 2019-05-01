@@ -73,7 +73,7 @@ public class CheckoutActivity extends AppCompatActivity {
     public void btnPayClicked(View view) {
 
         if (validateInput(inputCardNo, inputLayoutCardNo)) {
-            
+
             int cartId = SharedPreferencesManager.getCartId(this);
 
             CheckoutService checkoutService = APIClient.getClient().create(CheckoutService.class);

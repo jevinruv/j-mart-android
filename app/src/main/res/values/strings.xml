@@ -18,4 +18,5 @@
     <string name="activity_profile">Profile</string>
     <string name="success_msg_updated">Successfully updated user data</string>
     <string name="success_msg_deleted_user">Successfully deleted User</string>
+    <string name="err_msg_token_validation_fail">User validation Fail, Please Signin again!</string>
 </resources>
