@@ -1,9 +1,19 @@
 package com.jevin.jmart.views;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,6 +26,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.jevin.jmart.BuildConfig;
 import com.jevin.jmart.R;
 import com.jevin.jmart.helpers.APIClient;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
@@ -25,6 +36,10 @@ import com.jevin.jmart.models.Product;
 import com.jevin.jmart.services.CartService;
 import com.jevin.jmart.services.ICartService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +51,8 @@ import static android.text.Layout.JUSTIFICATION_MODE_INTER_WORD;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
+    private static final String TAG = ProductDetailActivity.class.getSimpleName();
+
     private TextView lblDiscountPrice, lblPrice, lblDescription, lblQuantity;
     private ImageView image;
     private Button btnAdd, btnSub, btnRemove;
@@ -46,7 +63,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Product product;
     private Boolean inCart = false;
 
-    private static final String TAG = ProductDetailActivity.class.getSimpleName();
+    private String sharePath = "no";
 
 
     @Override
@@ -113,6 +130,58 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void btnShareClicked(View view) {
+
+        takeScreenshot();
+        if (!sharePath.equals("no")) {
+            share(sharePath);
+        }
+    }
+
+    private void takeScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            // image naming and path  to include sd card  appending name you choose for file
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now + ".jpeg";
+
+            // create bitmap screen capture
+            View v1 = getWindow().getDecorView().getRootView();
+            v1.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+            v1.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            String filePath = imageFile.getPath();
+            sharePath = filePath;
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void share(String sharePath) {
+
+        File file = new File(sharePath);
+
+        Uri uri = FileProvider.getUriForFile(
+                ProductDetailActivity.this,
+                BuildConfig.APPLICATION_ID + ".provider", file);
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        startActivity(intent);
+    }
 
     private void init() {
 
@@ -162,8 +231,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<Cart>() {
             @Override
             public void onResponse(Call<Cart> call, Response<Cart> response) {
-                Cart cart = response.body();
 
+                Cart cart = response.body();
                 List<CartProduct> cartProductList = cart.getCartProducts();
 
                 Optional<CartProduct> cartProduct = cartProductList
@@ -177,7 +246,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                     inCart = true;
                     fab.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_remove));
-                    fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.light_red)));
+                    fab.setBackgroundTintList(
+                            ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.light_red)));
 
                     layoutQuantity.setVisibility(View.VISIBLE);
                 }

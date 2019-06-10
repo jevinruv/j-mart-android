@@ -1,5 +1,6 @@
 package com.jevin.jmart.views;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -31,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText name, email, username, password;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutUsername, inputLayoutPassword;
+    private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +74,17 @@ public class RegisterActivity extends AppCompatActivity {
             AuthService authService = APIClient.getClientForAuth().create(AuthService.class);
             Call<JSONObject> call = authService.signUp(user);
 
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage(getString(R.string.msg_sign_up));
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
             call.enqueue(new Callback<JSONObject>() {
                 @Override
                 public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+
+                    progressDialog.dismiss();
 
                     if (response.isSuccessful()) {
                         try {

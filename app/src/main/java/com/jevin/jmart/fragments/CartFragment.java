@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.jevin.jmart.helpers.MyApplication;
 import com.jevin.jmart.helpers.SharedPreferencesManager;
 import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.CartProduct;
+import com.jevin.jmart.services.CartService;
 import com.jevin.jmart.services.ICartService;
 import com.jevin.jmart.views.CheckoutActivity;
 
@@ -43,18 +47,17 @@ public class CartFragment extends Fragment implements ICartListener {
     private List<CartProduct> cartProductList = new ArrayList<>();
     private CartListAdapter cartListAdapter;
 
+    private Menu menu;
+
+
     public CartFragment() {
     }
 
-    public void btnCheckoutClicked() {
 
-        if (!cartProductList.isEmpty()) {
-            Intent intent = new Intent(getContext(), CheckoutActivity.class);
-            startActivity(intent);
-        }
-        else{
-            Toast.makeText(getContext(),getString(R.string.empty_cart),Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -75,11 +78,43 @@ public class CartFragment extends Fragment implements ICartListener {
             btnCheckoutClicked();
         });
 
+
         MyApplication.setiCartListener(this);
         fetchCart();
 
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        this.menu = menu;
+        inflater.inflate(R.menu.menu_cart, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_clear_cart:
+                clearCart();
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void btnCheckoutClicked() {
+
+        if (!cartProductList.isEmpty()) {
+            Intent intent = new Intent(getContext(), CheckoutActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getContext(), getString(R.string.empty_cart), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void fetchCart() {
 
@@ -93,12 +128,13 @@ public class CartFragment extends Fragment implements ICartListener {
             public void onResponse(Call<Cart> call, Response<Cart> response) {
                 Cart cart = response.body();
 
-                if(!cart.getCartProducts().isEmpty()){
+                if (!cart.getCartProducts().isEmpty()) {
                     cartProductList.clear();
                     cartProductList.addAll(cart.getCartProducts());
                     cartListAdapter.notifyDataSetChanged();
-                }
-                else{
+
+                    calculateTotal(cart);
+                } else {
                     lblEmpty.setVisibility(View.VISIBLE);
                 }
 
@@ -112,6 +148,27 @@ public class CartFragment extends Fragment implements ICartListener {
         });
     }
 
+    private void clearCart() {
+        CartService cartService = new CartService();
+        cartService.deleteCart(getContext());
+
+        cartProductList.clear();
+        cartListAdapter.notifyDataSetChanged();
+        menu.findItem(R.id.cart_total).setTitle("");
+    }
+
+    private void calculateTotal(Cart cart) {
+
+        double total = 0;
+
+        List<CartProduct> cartProductList = cart.getCartProducts();
+
+        for (CartProduct cartProduct : cartProductList) {
+            total += cartProduct.getProduct().getPrice() + cartProduct.getQuantity();
+        }
+
+        menu.findItem(R.id.cart_total).setTitle(getContext().getString(R.string.price_with_currency, total));
+    }
 
     @Override
     public void itemAdded(CartProduct cartProduct) {
@@ -137,4 +194,6 @@ public class CartFragment extends Fragment implements ICartListener {
     public void cartCheckOut() {
 
     }
+
+
 }

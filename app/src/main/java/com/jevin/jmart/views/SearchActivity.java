@@ -16,7 +16,10 @@ import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.ProductsListAdapter;
 import com.jevin.jmart.fragments.HomeFragment;
 import com.jevin.jmart.helpers.APIClient;
+import com.jevin.jmart.helpers.SharedPreferencesManager;
+import com.jevin.jmart.models.Cart;
 import com.jevin.jmart.models.Product;
+import com.jevin.jmart.services.ICartService;
 import com.jevin.jmart.services.ProductService;
 
 import java.util.ArrayList;
@@ -28,6 +31,8 @@ import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
+    private static final String TAG = SearchActivity.class.getSimpleName();
+
     private RecyclerView recyclerView;
     private SearchView searchView;
     private SearchView.OnQueryTextListener queryTextListener;
@@ -35,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
     private String searchKey = null;
     private List<Product> productList;
     private ProductsListAdapter productsListAdapter;
-    private static final String TAG = HomeFragment.class.getSimpleName();
+    private Cart cart;
 
 
     @Override
@@ -119,9 +124,10 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         productList = new ArrayList<>();
-        productsListAdapter = new ProductsListAdapter(this, productList);
+        productsListAdapter = new ProductsListAdapter(this, productList, cart);
         recyclerView.setAdapter(productsListAdapter);
 
+        fetchCart();
         fetchProducts();
     }
 
@@ -142,6 +148,33 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
+    private void fetchCart() {
+
+        ICartService cartService = APIClient.getClient().create(ICartService.class);
+
+        int cartId = SharedPreferencesManager.getCartId(this);
+
+        Call<Cart> call = cartService.get(cartId);
+
+        call.enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+
+                if (response.isSuccessful()) {
+                    cart = response.body();
+                    productsListAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "Number of carts received: " + cart.toString());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });

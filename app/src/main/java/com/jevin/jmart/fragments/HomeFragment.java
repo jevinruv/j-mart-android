@@ -17,8 +17,11 @@ import android.view.ViewGroup;
 
 import com.jevin.jmart.R;
 import com.jevin.jmart.adapters.ProductsListAdapter;
-import com.jevin.jmart.models.Product;
 import com.jevin.jmart.helpers.APIClient;
+import com.jevin.jmart.helpers.SharedPreferencesManager;
+import com.jevin.jmart.models.Cart;
+import com.jevin.jmart.models.Product;
+import com.jevin.jmart.services.ICartService;
 import com.jevin.jmart.services.ProductService;
 
 import java.util.ArrayList;
@@ -31,14 +34,14 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-//    private OnFragmentInteractionListener mListener;
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
     private RecyclerView recyclerView;
     private SearchView searchView;
     private SearchView.OnQueryTextListener queryTextListener;
     private List<Product> productList;
+    private Cart cart;
     private ProductsListAdapter productsListAdapter;
-    private static final String TAG = HomeFragment.class.getSimpleName();
 
 
     public HomeFragment() {
@@ -48,7 +51,6 @@ public class HomeFragment extends Fragment {
     public static HomeFragment newInstance(String param1) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,11 +59,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override
@@ -72,15 +69,18 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         productList = new ArrayList<>();
-        productsListAdapter = new ProductsListAdapter(getActivity(), productList);
+        cart = new Cart();
+        productsListAdapter = new ProductsListAdapter(getActivity(), productList, cart);
         recyclerView.setAdapter(productsListAdapter);
 
         fetchProducts();
+        fetchCart();
 
         return view;
     }
 
     private void fetchProducts() {
+
         ProductService productService = APIClient.getClient().create(ProductService.class);
 
         Call<List<Product>> call = productService.getAll();
@@ -96,6 +96,33 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
+    private void fetchCart() {
+
+        ICartService cartService = APIClient.getClient().create(ICartService.class);
+
+        int cartId = SharedPreferencesManager.getCartId(getContext());
+
+        Call<Cart> call = cartService.get(cartId);
+
+        call.enqueue(new Callback<Cart>() {
+            @Override
+            public void onResponse(Call<Cart> call, Response<Cart> response) {
+
+                if (response.isSuccessful()) {
+                    cart = response.body();
+                    productsListAdapter.setCart(cart);
+                    productsListAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "Number of carts received: " + cart);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Cart> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });
@@ -143,43 +170,5 @@ public class HomeFragment extends Fragment {
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
-
-
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-//
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
 
 }

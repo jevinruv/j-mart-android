@@ -25,10 +25,11 @@ import retrofit2.Response;
 
 public class CategoryFragment extends Fragment {
 
+    private static final String TAG = CategoryFragment.class.getSimpleName();
+
     private RecyclerView recyclerView;
     private List<Category> categoryList;
     private CategoryListAdapter categoryListAdapter;
-    private static final String TAG = CategoryFragment.class.getSimpleName();
 
     public CategoryFragment() {
     }
